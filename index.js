@@ -133,9 +133,9 @@ async function sendTermsEmbed(msg) {
         .add(role)
         .then(() => {
           console.log(`Added role to ${user.tag}`);
-          msg.channel.send(
-            `${user}, you have successfully accepted the terms and conditions.`
-          );
+          // msg.channel.send(
+          //   `${user}, you have successfully accepted the terms and conditions.`
+          // );
         })
         .catch(console.error);
     }
