@@ -110,20 +110,18 @@ async function sendTermsEmbed(msg) {
     .setTitle("Terms and Conditions")
     .setDescription(
       "Please read and accept the following terms and conditions to continue.\n\n" +
-        "1. By accepting these terms, you agree to abide by the rules and guidelines set forth by TheMersive community.\n\n" +
-        "2. You understand that any violation of these terms may result in disciplinary action, including but not limited to warnings, temporary suspension, or permanent bans.\n\n" +
-        "3. You acknowledge that participation in TheMersive activities is voluntary, and you take responsibility for your actions within the community.\n\n" +
-        "4. You agree to respect the privacy and rights of other members, and to contribute positively to the overall atmosphere of inclusivity and collaboration.\n\n" +
-        "React with the ✅ emoji below to accept the terms and conditions."
+      "1. By accepting these terms, you agree to abide by the rules and guidelines set forth by TheMersive community.\n\n" +
+      "2. You understand that any violation of these terms may result in disciplinary action, including but not limited to warnings, temporary suspension, or permanent bans.\n\n" +
+      "3. You acknowledge that participation in TheMersive activities is voluntary, and you take responsibility for your actions within the community.\n\n" +
+      "4. You agree to respect the privacy and rights of other members, and to contribute positively to the overall atmosphere of inclusivity and collaboration.\n\n" +
+      "React with the ✅ emoji below to accept the terms and conditions."
     );
 
   const sentMessage = await msg.channel.send(embed);
   await sentMessage.react("✅");
 
   const filter = (reaction, user) => reaction.emoji.name === "✅" && !user.bot;
-  const reactionCollector = sentMessage.createReactionCollector(filter, {
-    time: 60000,
-  });
+  const reactionCollector = sentMessage.createReactionCollector(filter);
 
   reactionCollector.on("collect", (reaction, user) => {
     const member = reaction.message.guild.members.cache.get(user.id);
@@ -141,13 +139,13 @@ async function sendTermsEmbed(msg) {
         })
         .catch(console.error);
     }
-    reactionCollector.stop();
   });
 
   reactionCollector.on("end", () => {
     console.log("Reaction collector ended.");
   });
 }
+
 
 async function help(msg) {
   if (msg.content === "!help") {
